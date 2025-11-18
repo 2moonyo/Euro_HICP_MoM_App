@@ -1,8 +1,12 @@
 # Euro Area HICP Nowcast Pipeline
 
+
+
 A modular end-to-end data engineering project that demonstrates ingestion, transformation, modelling, and dashboarding for a real-time Euro-area inflation nowcast.
 
 ---
+
+**Link to repo : "https://github.com/2moonyo/Euro_HICP_MoM_App"**
 
 ## Quick Start
 
