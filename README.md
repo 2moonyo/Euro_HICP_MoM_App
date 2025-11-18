@@ -1,4 +1,4 @@
-#Euro Area HICP Nowcast Pipeline
+# Euro Area HICP Nowcast Pipeline
 
 A modular end-to-end data engineering project that demonstrates ingestion, transformation, modelling, and dashboarding for a real-time Euro-area inflation nowcast.
 
