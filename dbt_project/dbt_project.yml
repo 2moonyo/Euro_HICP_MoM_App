@@ -1,0 +1,11 @@
+name: euro_nowcast
+version: 1.0.0
+config-version: 2
+
+profile: euro_nowcast  # see profiles below
+
+models:
+  euro_nowcast:
+    +materialized: table
+    gold:
+      +tags: ["gold"]

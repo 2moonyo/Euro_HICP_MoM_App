@@ -1,0 +1,55 @@
+# Environment variables (IMPORTANT - contains API keys)
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+.venv/
+venv/
+
+
+# dbt
+dbt_project/target/
+dbt_project/dbt_packages/
+dbt_project/logs/
+dbt_project/.user.yml
+
+# Logs
+logs/
+*.log
+analytics/logs/
+analytics/outputs/
+
+# Data files (bronze/silver/gold layers)
+data/
+!data/.gitkeep
+
+# Model artifacts
+models/*.pkl
+models/*.joblib
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Screenshots (optional - keep if you want to show in README)
+# screenshots/
+
+# Temporary files
+*.tmp
+*.bak

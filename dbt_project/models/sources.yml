@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: silver
+    schema: silver                # ASSUMPTION: your DuckDB schema
+    tables:
+      - name: ecb_fx
+      - name: ecb_rates
+      - name: energy_prices
+      - name: eurostat_hicp

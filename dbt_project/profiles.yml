@@ -1,0 +1,8 @@
+euro_nowcast:
+  target: duckdb
+  outputs:
+    duckdb:
+      type: duckdb
+      path: "{{ env_var('DB_PATH') }}"
+      schema: gold
+      threads: 4

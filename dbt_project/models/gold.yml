@@ -1,0 +1,81 @@
+version: 2
+
+models:
+  - name: dim_time
+    description: "Month-level date dimension"
+    columns:
+      - name: month
+        tests: [not_null, unique]
+
+  - name: fact_hicp
+    description: "Monthly HICP index (2015=100) by geo and series"
+    columns:
+      - name: month
+        tests: [not_null]
+      - name: geo
+        tests: [not_null]
+      - name: hicp_index
+        tests: [not_null]
+
+  - name: fact_macro
+    description: "Monthly macro indicators aligned with HICP"
+    columns:
+      - name: month
+        tests: [not_null]
+      - name: geo
+        tests: [not_null]
+
+  - name: fact_cpi_features
+    description: "Denormalised HICP + macro features with engineered lags/changes"
+
+  - name: gold_nowcast_input
+    description: "ML-ready design matrix for CPI nowcast"
+    columns:
+      - name: target_hicp_index
+        tests: [not_null]
+
+  - name: gold_dashboard_view
+    description: "BI-friendly monthly view"
+
+  - name: v_hicp_dashboard_wide
+    description: "Dashboard view combining actual HICP and nowcast predictions"
+    tags: ['dashboard', 'post_ml']
+    columns:
+      - name: month
+        description: "Month (first day)"
+        tests: [not_null]
+      - name: index_value
+        description: "HICP index value (2015=100)"
+        tests: [not_null]
+      - name: source
+        description: "Either 'actual' or 'nowcast'"
+        tests: [not_null, accepted_values: {values: ['actual', 'nowcast']}]
+      - name: hicp_yoy
+        description: "Year-over-year percentage change"
+      - name: hicp_idx_ma3
+        description: "3-month moving average of index"
+      - name: hicp_idx_ma12
+        description: "12-month moving average of index"
+
+
+  - name: v_macro_monthly_wide
+    description: "Wide monthly macro indicators with rolling averages"
+    tags: ['dashboard', 'post_ml']
+    columns:
+      - name: ref_month
+        description: "Reference month (first day)"
+        tests: [not_null]
+      - name: fx_usd_eur_avg_m
+        description: "Monthly average USD/EUR exchange rate"
+      - name: fx_ma3
+        description: "3-month moving average of FX rate"
+      - name: fx_ma12
+        description: "12-month moving average of FX rate"
+      - name: energy_price_eur_m
+        description: "Monthly average energy price in EUR"
+      - name: energy_ma3
+        description: "3-month moving average of energy price"
+      - name: energy_ma12
+        description: "12-month moving average of energy price"
+      - name: policy_rate_eom_m
+        description: "End-of-month ECB policy rate"
