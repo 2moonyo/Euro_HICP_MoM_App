@@ -79,3 +79,80 @@ models:
         description: "12-month moving average of energy price"
       - name: policy_rate_eom_m
         description: "End-of-month ECB policy rate"
+  
+  # labour nowcast input
+  - name: gold_labour_nowcast_input
+    description: "Nowcast training set for the labour block: HICP MoM target with labour features only"
+    columns:
+      - name: month
+        description: "Month (first day of month)"
+        tests: [not_null]
+      - name: geo
+        description: "Geographical area (EA20, country code, etc.)"
+        tests: [not_null]
+      - name: hicp_mom
+        description: "Month-on-month change in headline HICP (target variable)"
+
+      # Unemployment features
+      - name: unemployment_rate
+        description: "Current unemployment rate, percent of active population"
+      - name: unemp_lag_1m
+        description: "Unemployment rate 1 month ago"
+      - name: unemp_lag_3m
+        description: "Unemployment rate 3 months ago"
+      - name: unemp_lag_7m
+        description: "Unemployment rate 7 months ago"
+      - name: unemp_lag_10m
+        description: "Unemployment rate 10 months ago"
+      - name: unemp_lag_12m
+        description: "Unemployment rate 12 months ago"
+      - name: unemp_mom
+        description: "Month-on-month change in unemployment rate"
+      - name: unemp_yoy
+        description: "Year-on-year change in unemployment rate"
+
+      # Labour cost index features
+      - name: labour_cost_index
+        description: "Current labour cost index (2020=100)"
+      - name: lci_lag_1m
+        description: "Labour cost index 1 month ago"
+      - name: lci_lag_3m
+        description: "Labour cost index 3 months ago"
+      - name: lci_lag_7m
+        description: "Labour cost index 7 months ago"
+      - name: lci_lag_10m
+        description: "Labour cost index 10 months ago"
+      - name: lci_lag_12m
+        description: "Labour cost index 12 months ago"
+      - name: lci_mom
+        description: "Month-on-month change in labour cost index"
+      - name: lci_yoy
+        description: "Year-on-year change in labour cost index"
+
+      # Hours worked features
+      - name: hours_worked_index
+        description: "Index of hours worked"
+      - name: hw_lag_1m
+        description: "Hours worked index 1 month ago"
+      - name: hw_lag_3m
+        description: "Hours worked index 3 months ago"
+      - name: hw_lag_7m
+        description: "Hours worked index 7 months ago"
+      - name: hw_lag_10m
+        description: "Hours worked index 10 months ago"
+      - name: hw_lag_12m
+        description: "Hours worked index 12 months ago"
+
+      # Job vacancy features
+      - name: job_vacancy_rate
+        description: "Current job vacancy rate, percent of total posts"
+      - name: jv_lag_1m
+        description: "Job vacancy rate 1 month ago"
+      - name: jv_lag_3m
+        description: "Job vacancy rate 3 months ago"
+      - name: jv_lag_7m
+        description: "Job vacancy rate 7 months ago"
+      - name: jv_lag_10m
+        description: "Job vacancy rate 10 months ago"
+      - name: jv_lag_12m
+        description: "Job vacancy rate 12 months ago"

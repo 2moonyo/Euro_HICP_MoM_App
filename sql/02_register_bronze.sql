@@ -57,3 +57,63 @@ FROM read_csv_auto(
   'data/bronze/eurostat_hicp/dt=*/part-*.csv',
   hive_partitioning = 1
 );
+
+-- EUROSTAT LABOUR UNEMPLOYMENT (monthly) → bronze.eurostat_labour_unemployment_stg
+CREATE OR REPLACE TABLE bronze.eurostat_labour_unemployment_stg AS
+SELECT
+  try_cast(dt AS DATE)                         AS dt,
+  dataset,
+  series_id,
+  COALESCE(NULLIF(TRIM(geo), ''), 'EA20')      AS geo,           
+  try_cast(value AS DOUBLE)                    AS value,
+  source,
+  try_cast(ingest_ts AS TIMESTAMPTZ)           AS ingest_ts
+FROM read_csv_auto(
+  'data/bronze/labour_unemployment/dt=*/part-*.csv',
+  hive_partitioning = 1
+);
+
+-- EUROSTAT LABOUR COST INDEX (quartely) → bronze.eurostat_labour_labour_cost_index_stg
+CREATE OR REPLACE TABLE bronze.labour_cost_index_stg AS
+SELECT
+  dt,  
+  dataset,
+  series_id,
+  COALESCE(NULLIF(TRIM(geo), ''), 'EA20') AS geo,
+  try_cast(value AS DOUBLE) AS value,
+  source,
+  try_cast(ingest_ts AS TIMESTAMPTZ) AS ingest_ts
+FROM read_csv_auto(
+  'data/bronze/labour_cost_index/dt=*/part-*.csv',
+  hive_partitioning = 1
+);
+
+-- EUROSTAT JOB VACANCY_RATE (quartely) → bronze.eurostat_labour_labour_cost_index_stg
+CREATE OR REPLACE TABLE bronze.labour_job_vacancy_rate_stg AS
+SELECT
+  dt,
+  dataset,
+  series_id,
+  COALESCE(NULLIF(TRIM(geo), ''), 'EA20') AS geo,
+  try_cast(value AS DOUBLE) AS value,
+  source,
+  try_cast(ingest_ts AS TIMESTAMPTZ) AS ingest_ts
+FROM read_csv_auto(
+  'data/bronze/labour_job_vacancy_rate/dt=*/part-*.csv',
+  hive_partitioning = 1
+);
+
+-- EUROSTAT HOURS WORKED (quartely) → bronze.eurostat_labour_labour_cost_index_stg
+CREATE OR REPLACE TABLE bronze.labour_hours_worked_stg AS
+SELECT
+  dt,
+  dataset,
+  series_id,
+  COALESCE(NULLIF(TRIM(geo), ''), 'EA20') AS geo,
+  try_cast(value AS DOUBLE) AS value,
+  source,
+  try_cast(ingest_ts AS TIMESTAMPTZ) AS ingest_ts
+FROM read_csv_auto(
+  'data/bronze/labour_hours_worked/dt=*/part-*.csv',
+  hive_partitioning = 1
+);

@@ -2,9 +2,13 @@ version: 2
 
 sources:
   - name: silver
-    schema: silver                # ASSUMPTION: your DuckDB schema
+    schema: silver                
     tables:
       - name: ecb_fx
       - name: ecb_rates
       - name: energy_prices
       - name: eurostat_hicp
+      - name: eurostat_labour_unemployment
+      - name: labour_cost_index
+      - name: labour_hours_worked
+      - name: labour_job_vacancy_rate

@@ -11,6 +11,7 @@ build/
 *.egg
 .venv/
 venv/
+.env
 
 
 # dbt
@@ -32,7 +33,8 @@ data/
 # Model artifacts
 models/*.pkl
 models/*.joblib
-
+models/arima/*.pkl
+models/arima/*.joblib
 # IDE
 .vscode/
 .idea/
@@ -43,6 +45,7 @@ models/*.joblib
 # OS
 .DS_Store
 Thumbs.db
+*.zip
 
 # Jupyter
 .ipynb_checkpoints/

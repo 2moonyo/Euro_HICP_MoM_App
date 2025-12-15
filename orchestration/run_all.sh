@@ -216,6 +216,50 @@ else
     exit 1
 fi
 
+# Labour Unemployment Data
+stage_start
+echo "Fetching Labour Unemployment data..."
+if python ingestion/lambda_labour/unemployment_rate.py; then
+    unemployment_rate=$(find "$BRONZE_ROOT/labour_unemployment" -name "*.csv" 2>/dev/null | wc -l | tr -d ' ')
+    stage_end "ingestion_unemployment" "success" "$unemployment_rate"
+else
+    stage_end "ingestion_unemployment" "failed" 0 "Unemployment ingestion failed"
+    exit 1
+fi
+
+# Labour Job Vacancy Data
+stage_start
+echo "Fetching Labour Job Vacancy data..."
+if python ingestion/lambda_labour/job_vacancy_rate.py; then
+    job_vacancy_rate=$(find "$BRONZE_ROOT/labour_job_vacancy_rate" -name "*.csv" 2>/dev/null | wc -l | tr -d ' ')
+    stage_end "ingestion_job_vacancy" "success" "$job_vacancy_rate"
+else
+    stage_end "ingestion_job_vacancy" "failed" 0 "Job vacancy ingestion failed"
+    exit 1
+fi
+
+# Labour Hours Worked Data
+stage_start
+echo "Fetching Labour Hours Worked data..."
+if python ingestion/lambda_labour/hours_worked.py; then
+    hours_worked=$(find "$BRONZE_ROOT/labour_hours_worked" -name "*.csv" 2>/dev/null | wc -l | tr -d ' ')
+    stage_end "ingestion_hours_worked" "success" "$hours_worked"
+else
+    stage_end "ingestion_hours_worked" "failed" 0 "Hours worked ingestion failed"
+    exit 1
+fi
+
+# Labour Cost Index Data
+
+stage_start
+echo "Fetching Labour Cost Index data..."
+if python ingestion/lambda_labour/labour_cost_index_history.py; then
+    labour_cost_index=$(find "$BRONZE_ROOT/labour_cost_index" -name "*.csv" 2>/dev/null | wc -l | tr -d ' ')
+    stage_end "ingestion_labour_cost_index" "success" "$labour_cost_index"
+else
+    stage_end "ingestion_labour_cost_index" "failed" 0 "Labour cost index ingestion failed"
+    exit 1
+fi
 echo "[OK] All data extraction complete."
 
 # -------- 2) Create schemas --------
@@ -329,6 +373,17 @@ else
     stage_end "ml_model_training" "failed" 0 "Model training failed"
     exit 1
 fi
+
+stage_start
+if python analytics/model_training/model_training_labour.py; then
+    ml_artifacts_count=$(get_row_count "observability.ml_artifacts")
+    stage_end "ml_model_training" "success" "$ml_artifacts_count"
+    echo "[OK] Model training complete."
+else
+    stage_end "ml_model_training" "failed" 0 "Model training failed"
+    exit 1
+fi
+
 
 # -------- 9) Run nowcast prediction --------
 echo ""

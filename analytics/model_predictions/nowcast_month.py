@@ -243,8 +243,8 @@ def save_nowcast_to_db(result: dict) -> None:
         con.close()
 
 def main():
-    # Example: predict CPI for October 2025
-    target_month = "2025-10-01"
+    # Example: predict CPI for November 2025
+    target_month = "2025-11-01"
 
     result = nowcast_future_month(target_month, geo="EA20")
 
